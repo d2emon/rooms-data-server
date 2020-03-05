@@ -1,13 +1,18 @@
 import express from 'express';
+import config from './config';
+import indexRouter from './routes';
+import roomsRouter from './routes/rooms';
+import zonesRouter from './routes/zones';
+
 const app = express();
-const port = 8080; // default port to listen
 
-// define a route handler for the default home page
-app.get('/', (req, res) => {
-    res.send('Hello world!');
-});
+const port = config.port;
 
-// start the Express server
+app.use('/', indexRouter);
+app.use('/rooms', roomsRouter);
+app.use('/zones', zonesRouter);
+
 app.listen(port, () => {
+    // tslint:disable-next-line:no-console
     console.log(`server started at http://localhost:${ port }`);
 });

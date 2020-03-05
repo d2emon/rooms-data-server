@@ -4,8 +4,16 @@
   "description": "Rooms data server",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+    "clean": "rimraf dist/*",
+    "copy-assets": "ts-node tools/copyAssets",
+    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+    "prebuild": "npm run lint",
+    "watch:ts": "tsc --watch",
+    "watch": "nodemon --watch src -e ts,ejs --exec npm run start",
     "build": "tsc",
+    "all:build": "npm-run-all clean lint tsc copy-assets",
+    "dev:start": "npm-run-all build start",
+    "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
     "prestart": "npm run build",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,6 +33,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.3",
+    "nodemon": "^2.0.2",
     "tslint": "^6.0.0",
     "typescript": "^3.8.3"
   }
