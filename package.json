@@ -1,22 +1,30 @@
 {
   "name": "rooms-data-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Rooms data server",
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy-assets": "ts-node tools/copyAssets",
-    "lint": "tslint -c tslint.json -p tsconfig.json --fix",
-    "prebuild": "npm run lint",
+
     "watch:ts": "tsc --watch",
-    "watch": "nodemon --watch src -e ts,ejs --exec npm run start",
-    "build": "tsc",
+
     "all:build": "npm-run-all clean lint tsc copy-assets",
     "dev:start": "npm-run-all build start",
-    "dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
-    "prestart": "npm run build",
-    "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+
+    "old-ts:prestart": "npm run build",
+    "old-ts:start": "node .",
+    "old-ts:dev": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
+    "old-ts:lint": "tslint -c tslint.json -p tsconfig.json --fix",
+
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "prebuild": "npm run lint",
+    "build": "tsc",
+    "lint": "eslint --fix src test",
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+
   },
   "repository": {
     "type": "git",
@@ -29,12 +37,30 @@
   },
   "homepage": "https://github.com/d2emon/rooms-data-server#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.3",
-    "nodemon": "^2.0.2",
-    "tslint": "^6.0.0",
-    "typescript": "^3.8.3"
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.2",
+    "@types/morgan": "^1.9.4",
+    "@types/node": "^20.2.5",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
+    "eslint": "^8.42.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "<5.1.0"
   }
 }
