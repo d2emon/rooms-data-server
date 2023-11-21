@@ -5,7 +5,7 @@ import exits, { Exits } from '../data/exits';
 import { Zone } from '../data/zones';
 import { roomZone } from './zones';
 
-interface Room {
+export interface Room {
   roomId: number,
   exits: Exits,
   zone?: Zone,

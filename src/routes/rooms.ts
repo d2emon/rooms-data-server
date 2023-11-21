@@ -1,13 +1,15 @@
-import { Router } from 'express';
+import express from 'express';
+
 import getRooms from '../models/rooms';
+import ContentsResponse from '../interfaces/ContentsResponse';
 
-const router = Router();
+const router = express.Router();
 
-router.get('/', (req, res) => getRooms()
-  .then(rooms => res.json({
+router.get<{}, ContentsResponse>('/', async (req, res) => {
+  const rooms = await getRooms();
+  return res.json({
     rooms,
-  }))
-  .catch(error => res.json({ error })),
-);
+  });
+});
 
 export default router;
