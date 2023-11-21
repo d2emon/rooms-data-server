@@ -1,6 +1,6 @@
 import zones, { Zone } from '../data/zones';
 
-export const roomZone = (roomId: number): Zone => {
+export const roomZone = (roomId: number): Zone | undefined => {
   if (!roomId) {
     return zones
       .find((zone) => (zone.startRoomId === undefined));

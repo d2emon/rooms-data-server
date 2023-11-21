@@ -8,7 +8,7 @@ import { roomZone } from './zones';
 interface Room {
   roomId: number,
   exits: Exits,
-  zone: Zone,
+  zone?: Zone,
   name: string,
   description: string,
   death: boolean,
@@ -21,7 +21,7 @@ interface Room {
 
 const getFileName = (roomId: number): string => path.join(config.roomsPath, `${roomId}`);
 
-const loadFile = (fileName: string) => new Promise((resolve, reject) => fs
+const loadFile = (fileName: string): Promise<Buffer> => new Promise((resolve, reject) => fs
   .readFile(fileName, (err, data) => err ? reject(err) : resolve(data)));
 
 const isDark = (roomId: number): boolean => {
